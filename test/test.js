@@ -1,4 +1,5 @@
 var assert = require('assert');
+var fs = require('fs');
 var miaow = require('miaow');
 var path = require('path');
 
@@ -28,7 +29,7 @@ describe('正常模式', function () {
         console.error(err.toString());
         process.exit(1);
       }
-      log = require('./output/miaow.log.json');
+      log = JSON.parse(fs.readFileSync(path.resolve(__dirname, './output/miaow.log.json')));
       done();
     });
   });
@@ -76,7 +77,7 @@ describe('更换关键字', function () {
         console.error(err.toString());
         process.exit(1);
       }
-      log = require('./output/miaow.log.json');
+      log = JSON.parse(fs.readFileSync(path.resolve(__dirname, './output/miaow.log.json')));
       done();
     });
   });
