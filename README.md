@@ -19,7 +19,7 @@
 ### 安装
 
 ```
-npm install miaow-inline-parse -save
+npm install miaow-inline-parse --save-dev
 ```
 
 ### 在项目的 miaow.config.js 中添加模块的 parse 设置
