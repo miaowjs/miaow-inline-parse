@@ -1,6 +1,8 @@
 var async = require('async');
 var mutil = require('miaow-util');
 
+var pkg = require('./package.json');
+
 /**
  * 解析主入口
  */
@@ -14,10 +16,7 @@ function parse(option, cb) {
     var result = reg.exec(relative);
     this.getModule(result[2], function (err, module) {
       if (err) {
-        return cb(new mutil.PluginError('miaow-inline-parse', err, {
-          fileName: this.file.path,
-          showStack: true
-        }));
+        return cb(err);
       }
 
       dataURIMap[result[1]] = mutil.getDataURI(module.destAbsPath);
@@ -25,7 +24,10 @@ function parse(option, cb) {
     }.bind(this));
   }.bind(this), function (err) {
     if (err) {
-      return cb(err);
+      return cb(new mutil.PluginError(pkg.name, err, {
+        fileName: this.file.path,
+        showStack: true
+      }));
     }
 
     contents = contents.replace(reg, function (str, key) {
