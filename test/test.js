@@ -13,11 +13,9 @@ describe('正常模式', function () {
     miaow.compile({
       cwd: path.resolve(__dirname, './fixtures/normal'),
       output: path.resolve(__dirname, './output'),
-      mini: false,
-      lint: false,
       pack: false,
       module: {
-        parse: [
+        tasks: [
           {
             test: /\.(js|css)$/,
             plugins: [parse]
@@ -56,11 +54,9 @@ describe('更换关键字', function () {
     miaow.compile({
       cwd: path.resolve(__dirname, './fixtures/keyword'),
       output: path.resolve(__dirname, './output'),
-      mini: false,
-      lint: false,
       pack: false,
       module: {
-        parse: [
+        tasks: [
           {
             test: /\.(js|css)$/,
             plugins: [{

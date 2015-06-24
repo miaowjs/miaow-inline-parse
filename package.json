@@ -1,7 +1,7 @@
 {
   "name": "miaow-inline-parse",
   "description": "Miaow的资源嵌入工具",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": "miaowjs/miaow-inline-parse",
   "author": {
     "name": "anhulife",
@@ -14,7 +14,7 @@
     "miaow-util": "~0.0.4"
   },
   "devDependencies": {
-    "miaow": "~0.0.4",
+    "miaow": "~1.0.0",
     "mocha": "^2.2.4"
   },
   "scripts": {
