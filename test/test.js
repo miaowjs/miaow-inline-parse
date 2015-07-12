@@ -43,6 +43,11 @@ describe('正常模式', function () {
   it('脚本中嵌入样式', function () {
     assert.equal(log.modules['foo.js'].hash, 'ff88ed763a70a3f4e2ef71b6d971f7ac');
   });
+
+  it('添加依赖信息', function () {
+    assert.equal(log.modules['foo.css'].dependencies[0], 'foo.png');
+    assert.equal(log.modules['foo.js'].dependencies[0], 'foo.css');
+  });
 });
 
 describe('更换关键字', function () {

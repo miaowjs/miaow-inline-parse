@@ -12,17 +12,21 @@ function parse(option, cb) {
   var contents = this.contents.toString();
   var dataURIMap = {};
 
+  var module = this;
   async.eachSeries(contents.match(reg) || [], function (relative, cb) {
     var result = reg.exec(relative);
-    this.getModule(result[2], function (err, module) {
+    module.getModule(result[2], function (err, relativeModule) {
       if (err) {
         return cb(err);
       }
 
-      dataURIMap[result[1]] = mutil.getDataURI(module.destAbsPath);
+      // 添加依赖信息
+      module.dependencies.push(relativeModule.srcPath);
+
+      dataURIMap[result[1]] = mutil.getDataURI(relativeModule.destAbsPath);
       cb();
-    }.bind(this));
-  }.bind(this), function (err) {
+    });
+  }, function (err) {
     if (err) {
       return cb(new mutil.PluginError(pkg.name, err, {
         fileName: this.file.path,
@@ -34,10 +38,10 @@ function parse(option, cb) {
       return str.replace(key, dataURIMap[key]);
     });
 
-    this.contents = new Buffer(contents);
+    module.contents = new Buffer(contents);
 
     cb();
-  }.bind(this));
+  });
 }
 
 module.exports = parse;
