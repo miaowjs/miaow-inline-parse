@@ -8,7 +8,7 @@ var pkg = require('./package.json');
  */
 function parse(option, cb) {
   var keyword = option.keyword || 'inline';
-  var reg = new RegExp('[\'"\\(](([\\w\\_\\/\\.\\-]*)\\?' + keyword + ')[\'\"\\)]', 'gi');
+  var reg = new RegExp('[\'"\\(](([\\w\\_\\/\\.\\-]*)\\#' + keyword + ')[\'\"\\)]', 'gi');
   var contents = this.contents.toString();
   var dataURIMap = {};
 

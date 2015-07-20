@@ -5,7 +5,7 @@
 
 ```css
 .foo {
-  background: url(./foo.png?inline);
+  background: url(./foo.png#inline);
 }
 
 /* 处理后 */

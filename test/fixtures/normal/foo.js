@@ -1,1 +1,1 @@
-var fooCSSInline = './foo.css?inline';
+var fooCSSInline = './foo.css#inline';

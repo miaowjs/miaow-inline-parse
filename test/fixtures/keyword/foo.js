@@ -1,1 +1,1 @@
-var fooCSSInline = './foo.css?dataURI';
+var fooCSSInline = './foo.css#dataURI';
