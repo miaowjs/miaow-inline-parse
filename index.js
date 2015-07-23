@@ -44,4 +44,4 @@ function parse(option, cb) {
   });
 }
 
-module.exports = parse;
+module.exports = mutil.plugin(pkg.name, pkg.version, parse);
