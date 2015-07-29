@@ -20,18 +20,12 @@ function parse(option, cb) {
         return cb(err);
       }
 
-      // 添加依赖信息
-      module.dependencies.push(relativeModule.srcPath);
-
       dataURIMap[result[1]] = mutil.getDataURI(relativeModule.destAbsPath);
       cb();
     });
   }, function (err) {
     if (err) {
-      return cb(new mutil.PluginError(pkg.name, err, {
-        fileName: this.file.path,
-        showStack: true
-      }));
+      return cb(err);
     }
 
     contents = contents.replace(reg, function (str, key) {
