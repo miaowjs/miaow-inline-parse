@@ -8,9 +8,10 @@ var pkg = require('./package.json');
  */
 function parse(option, cb) {
   var keyword = option.keyword || 'inline';
-  var reg = new RegExp('[\'"\\(](([\\w\\_\\/\\.\\-]*)\\#' + keyword + ')[\'\"\\)]', 'gi');
+  var reg = option.reg || new RegExp('[\'"\\(](([\\w\\_\\/\\.\\-]*)\\#' + keyword + ')[\'\"\\)]', 'gi');
+  var type = option.type || 'data-uri';
   var contents = this.contents.toString();
-  var dataURIMap = {};
+  var inlineMap = {};
 
   var module = this;
   async.eachSeries(contents.match(reg) || [], function (relative, cb) {
@@ -20,7 +21,12 @@ function parse(option, cb) {
         return cb(err);
       }
 
-      dataURIMap[result[1]] = mutil.getDataURI(relativeModule.destAbsPath);
+      if (type === 'data-uri') {
+        inlineMap[result[1]] = mutil.getDataURI(relativeModule.destAbsPath);
+      } else if (type === 'content') {
+        inlineMap[result[1]] = relativeModule.contents.toString();
+      }
+
       cb();
     });
   }, function (err) {
@@ -29,7 +35,7 @@ function parse(option, cb) {
     }
 
     contents = contents.replace(reg, function (str, key) {
-      return str.replace(key, dataURIMap[key]);
+      return str.replace(key, inlineMap[key]);
     });
 
     module.contents = new Buffer(contents);
