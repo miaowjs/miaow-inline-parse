@@ -113,7 +113,7 @@ describe('嵌入内容', function () {
             plugins: [{
               plugin: parse,
               option: {
-                reg: /(inline\s*\(\s*['"]([\w\_\/\.\-]+)['"]\s*\)\s*;?)/g,
+                regexp: /(inline\s*\(\s*['"]([\w\_\/\.\-]+)['"]\s*\)\s*;?)/g,
                 type: 'content'
               }
             }]
@@ -135,7 +135,7 @@ describe('嵌入内容', function () {
   });
 
   it('页面中嵌入脚本', function () {
-    assert.equal(log.modules['foo.html'].hash, 'f0e39dc5524af9f9235b9722a22e48a0');
+    assert.equal(log.modules['foo.html'].hash, '75d7f2f1be685213bef10187f40b40cb');
   });
 
   it('脚本中嵌入脚本', function () {

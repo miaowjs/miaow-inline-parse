@@ -1,7 +1,7 @@
 {
   "name": "miaow-inline-parse",
   "description": "Miaow的资源嵌入工具",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "repository": "miaowjs/miaow-inline-parse",
   "author": {
     "name": "anhulife",
