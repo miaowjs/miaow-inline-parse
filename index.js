@@ -15,6 +15,7 @@ function parse(option, cb) {
 
   var module = this;
   async.eachSeries(contents.match(reg) || [], function (relative, cb) {
+    reg.lastIndex = 0;
     var result = reg.exec(relative);
     module.getModule(result[2], function (err, relativeModule) {
       if (err) {
