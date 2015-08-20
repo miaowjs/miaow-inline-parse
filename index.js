@@ -36,7 +36,7 @@ function parse(option, cb) {
     }
 
     contents = contents.replace(reg, function (str, key) {
-      return str.replace(key, inlineMap[key]);
+      return str.replace(key, function () {return inlineMap[key];});
     });
 
     module.contents = new Buffer(contents);
