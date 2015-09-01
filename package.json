@@ -1,7 +1,7 @@
 {
   "name": "miaow-inline-parse",
   "description": "Miaow的资源嵌入工具",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "repository": "miaowjs/miaow-inline-parse",
   "author": {
     "name": "anhulife",
@@ -22,6 +22,7 @@
     "mocha": "^2.2.4"
   },
   "scripts": {
+    "postpublish": "cnpm sync miaow-inline-parse",
     "test": "node ./node_modules/mocha/bin/mocha"
   },
   "engines": {
