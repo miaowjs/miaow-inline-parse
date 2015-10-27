@@ -2,6 +2,7 @@
 
 > Miaow的资源嵌入工具,可以将指定资源以Data-URI的格式或是内容直接嵌入进来
 
+## 效果示例
 
 ```css
 .foo {
@@ -14,30 +15,23 @@
 }
 ```
 
-## 使用说明
+### 参数说明
 
-### 安装
+#### keyword
+Type:`String` Default:`inline`
 
-```
-npm install miaow-inline-parse --save-dev
-```
+用于匹配哪些链接需要做嵌入操作
 
-### 在项目的 miaow.config.js 中添加模块的 tasks 设置
+#### regexp
+Type:`RegExp` Default:`new RegExp('[\'"\\(](([\\w\\_\\/\\.\\-]*)\\#' + keyword + ')[\'\"\\)]', 'gi')`
 
-```javascript
-//miaow.config.js
-module: {
-  tasks: [
-    {
-      test: /\.(js|css)$/,
-      plugins: ['miaow-inline-parse']
-    }
-  ]
-}
-```
+自定义正则表达式
 
-### 选项
+需要有两个匹配组, 第一个是替换的整体内容, 第二个是资源路径
 
-* keyword 默认是`inline`, 用于匹配哪些链接需要做嵌入操作
-* regexp 自定义正则表达式, 需要有两个匹配组, 第一个是替换的整体内容, 第二个是资源路径
-* type 默认是`data-uri`, 嵌入的方式, 支持Data-URI和内容嵌入, 如果想嵌入内容, 请设置为`content`
+#### type
+Type:`String` Default:`data-uri`
+
+嵌入的方式
+
+支持Data-URI和内容嵌入, 如果想嵌入内容, 请设置为`content`

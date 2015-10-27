@@ -1,48 +1,57 @@
 var async = require('async');
 var mutil = require('miaow-util');
+var path = require('path');
 
 var pkg = require('./package.json');
 
-/**
- * 解析主入口
- */
-function parse(option, cb) {
-  var keyword = option.keyword || 'inline';
-  var reg = option.regexp || new RegExp('[\'"\\(](([\\w\\_\\/\\.\\-]*)\\#' + keyword + ')[\'\"\\)]', 'gi');
-  var type = option.type || 'data-uri';
-  var contents = this.contents.toString();
+module.exports = function(options, callback) {
+  var context = this;
+
+  var keyword = options.keyword || 'inline';
+  var reg = options.regexp || new RegExp('[\'"\\(](([\\w\\_\\/\\.\\-]*)\\#' + keyword + ')[\'\"\\)]', 'gi');
+  var type = options.type || 'data-uri';
+  var contents = context.contents.toString();
   var inlineMap = {};
 
-  var module = this;
-  async.eachSeries(contents.match(reg) || [], function (relative, cb) {
-    reg.lastIndex = 0;
-    var result = reg.exec(relative);
-    module.getModule(result[2], function (err, relativeModule) {
+  async.eachSeries(
+    contents.match(reg) || [],
+    function(relative, callback) {
+      reg.lastIndex = 0;
+      var result = reg.exec(relative);
+      context.resolveModule(result[2], function(err, relativeModule) {
+        if (err) {
+          return callback(err);
+        }
+
+        context.addFileDependency(relativeModule.src);
+
+        if (type === 'data-uri') {
+          inlineMap[result[1]] = mutil.getDataURI(path.resolve(context.output, relativeModule.dest));
+        } else if (type === 'content') {
+          inlineMap[result[1]] = relativeModule.contents.toString();
+        }
+
+        callback();
+      });
+    },
+
+    function(err) {
       if (err) {
-        return cb(err);
+        return callback(err);
       }
 
-      if (type === 'data-uri') {
-        inlineMap[result[1]] = mutil.getDataURI(relativeModule.destAbsPath);
-      } else if (type === 'content') {
-        inlineMap[result[1]] = relativeModule.contents.toString();
-      }
+      contents = contents.replace(reg, function(str, key) {
+        return str.replace(key, function() {
+          return inlineMap[key];
+        });
+      });
 
-      cb();
+      context.contents = new Buffer(contents);
+
+      callback();
     });
-  }, function (err) {
-    if (err) {
-      return cb(err);
-    }
+};
 
-    contents = contents.replace(reg, function (str, key) {
-      return str.replace(key, function () {return inlineMap[key];});
-    });
-
-    module.contents = new Buffer(contents);
-
-    cb();
-  });
-}
-
-module.exports = mutil.plugin(pkg.name, pkg.version, parse);
+module.exports.toString = function() {
+  return [pkg.name, pkg.version].join('@');
+};
