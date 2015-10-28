@@ -23,8 +23,6 @@ module.exports = function(options, callback) {
           return callback(err);
         }
 
-        context.addFileDependency(relativeModule.src);
-
         if (type === 'data-uri') {
           inlineMap[result[1]] = mutil.getDataURI(path.resolve(context.output, relativeModule.dest));
         } else if (type === 'content') {
