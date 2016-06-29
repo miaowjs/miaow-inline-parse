@@ -13,9 +13,9 @@
     "inline"
   ],
   "dependencies": {
-    "async": "~1.4.2",
-    "lodash": "~3.10.1",
-    "miaow-util": "~1.0.0"
+    "async": "1.4.2",
+    "lodash": "3.10.1",
+    "miaow-util": "1.1.0"
   },
   "devDependencies": {
     "miaow": "^5.0.0",
