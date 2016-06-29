@@ -44,8 +44,8 @@ describe('正常模式', function() {
   });
 
   it('添加依赖信息', function() {
-    assert.equal(find(log.modules, {src: 'foo.css'}).fileDependencies[0], 'foo.png');
-    assert.equal(find(log.modules, {src: 'foo.js'}).fileDependencies[0], 'foo.css');
+    assert.equal(find(log.modules, {src: 'foo.css'}).dependencies[0], 'foo.png');
+    assert.equal(find(log.modules, {src: 'foo.js'}).dependencies[0], 'foo.css');
   });
 });
 
